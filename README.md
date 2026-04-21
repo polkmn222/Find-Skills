@@ -14,22 +14,60 @@ https://github.com/polkmn222/Find-Skills.git
 
 Use the same repository, but install or invoke it in the way your host expects.
 
-| Tool | Install | First Use |
+| Tool | Install Target | First Use |
 | --- | --- | --- |
-| Claude Code | `tmp=$(mktemp -d) && git clone https://github.com/polkmn222/Find-Skills.git "$tmp/find-skills" && mkdir -p .claude/skills && cp -R "$tmp/find-skills/.claude/skills/find-skills" .claude/skills/` | `Use find-skills to find skills for a CRM web project` |
-| Cursor | `tmp=$(mktemp -d) && git clone https://github.com/polkmn222/Find-Skills.git "$tmp/find-skills" && mkdir -p .cursor/skills && cp -R "$tmp/find-skills/.cursor/skills/find-skills" .cursor/skills/` | `@find-skills find skills for a CRM web project` |
-| Gemini CLI | `tmp=$(mktemp -d) && git clone https://github.com/polkmn222/Find-Skills.git "$tmp/find-skills" && mkdir -p .gemini/skills && cp -R "$tmp/find-skills/.gemini/skills/find-skills" .gemini/skills/` | `Use find-skills to find skills for a small game project` |
-| Codex CLI | `tmp=$(mktemp -d) && git clone https://github.com/polkmn222/Find-Skills.git "$tmp/find-skills" && mkdir -p .codex/skills && cp -R "$tmp/find-skills/.codex/skills/find-skills" .codex/skills/` | `Use find-skills to find skills for an agent project` |
+| Claude Code | `.claude/skills/find-skills` | `Use find-skills to find relevant skills for this project.` |
+| Cursor | `.cursor/skills/find-skills` | `@find-skills find relevant skills for this project.` |
+| Gemini CLI | `.gemini/skills/find-skills` | `Use find-skills to find relevant skills for this project.` |
+| Codex CLI | `.codex/skills/find-skills` | `Use find-skills to find relevant skills for this project.` |
 
-Install all hosts at once:
+## Install
+
+Install for Codex CLI:
 
 ```bash
-tmp=$(mktemp -d) && \
-git clone https://github.com/polkmn222/Find-Skills.git "$tmp/find-skills" && \
-mkdir -p .codex/skills .claude/skills .cursor/skills .gemini/skills && \
-cp -R "$tmp/find-skills/.codex/skills/find-skills" .codex/skills/ && \
-cp -R "$tmp/find-skills/.claude/skills/find-skills" .claude/skills/ && \
-cp -R "$tmp/find-skills/.cursor/skills/find-skills" .cursor/skills/ && \
+tmp=$(mktemp -d)
+git clone https://github.com/polkmn222/Find-Skills.git "$tmp/find-skills"
+mkdir -p .codex/skills
+cp -R "$tmp/find-skills/.codex/skills/find-skills" .codex/skills/
+```
+
+Install for Claude Code:
+
+```bash
+tmp=$(mktemp -d)
+git clone https://github.com/polkmn222/Find-Skills.git "$tmp/find-skills"
+mkdir -p .claude/skills
+cp -R "$tmp/find-skills/.claude/skills/find-skills" .claude/skills/
+```
+
+Install for Cursor:
+
+```bash
+tmp=$(mktemp -d)
+git clone https://github.com/polkmn222/Find-Skills.git "$tmp/find-skills"
+mkdir -p .cursor/skills
+cp -R "$tmp/find-skills/.cursor/skills/find-skills" .cursor/skills/
+```
+
+Install for Gemini CLI:
+
+```bash
+tmp=$(mktemp -d)
+git clone https://github.com/polkmn222/Find-Skills.git "$tmp/find-skills"
+mkdir -p .gemini/skills
+cp -R "$tmp/find-skills/.gemini/skills/find-skills" .gemini/skills/
+```
+
+Install all hosts:
+
+```bash
+tmp=$(mktemp -d)
+git clone https://github.com/polkmn222/Find-Skills.git "$tmp/find-skills"
+mkdir -p .codex/skills .claude/skills .cursor/skills .gemini/skills
+cp -R "$tmp/find-skills/.codex/skills/find-skills" .codex/skills/
+cp -R "$tmp/find-skills/.claude/skills/find-skills" .claude/skills/
+cp -R "$tmp/find-skills/.cursor/skills/find-skills" .cursor/skills/
 cp -R "$tmp/find-skills/.gemini/skills/find-skills" .gemini/skills/
 ```
 
@@ -44,7 +82,7 @@ Read `/path/to/Find-Skills/SKILL.md` and find appropriate Codex skills for this 
 For a project idea:
 
 ```text
-Read `/path/to/Find-Skills/SKILL.md` and find Codex skills for: small game project.
+Read `/path/to/Find-Skills/SKILL.md` and find relevant Codex skills for this project idea: <describe the idea>.
 ```
 
 If this folder is copied into a project as `find-skills/`, ask:
