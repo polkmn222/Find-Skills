@@ -16,10 +16,10 @@ Use the same repository, but install or invoke it in the way your host expects.
 
 | Tool | Install Target | First Use |
 | --- | --- | --- |
+| Codex CLI | `.codex/skills/find-skills` | `Use find-skills to find relevant skills for this project.` |
 | Claude Code | `.claude/skills/find-skills` | `Use find-skills to find relevant skills for this project.` |
 | Cursor | `.cursor/skills/find-skills` | `@find-skills find relevant skills for this project.` |
 | Gemini CLI | `.gemini/skills/find-skills` | `Use find-skills to find relevant skills for this project.` |
-| Codex CLI | `.codex/skills/find-skills` | `Use find-skills to find relevant skills for this project.` |
 
 ## Install
 
@@ -73,28 +73,30 @@ cp -R "$tmp/find-skills/.gemini/skills/find-skills" .gemini/skills/
 
 ## Direct Use Without Installing
 
-Point your agent at this folder:
+Point your agent at the host-specific skill file.
+
+Codex:
 
 ```text
-Read `/path/to/Find-Skills/SKILL.md` and find appropriate Codex skills for this project.
+Read `/path/to/Find-Skills/.codex/skills/find-skills/SKILL.md` and find relevant skills for this project.
 ```
 
-For a project idea:
+Claude Code:
 
 ```text
-Read `/path/to/Find-Skills/SKILL.md` and find relevant Codex skills for this project idea: <describe the idea>.
+Read `/path/to/Find-Skills/.claude/skills/find-skills/SKILL.md` and find relevant skills for this project.
 ```
 
-If this folder is copied into a project as `find-skills/`, ask:
+Cursor:
 
 ```text
-Read `find-skills/SKILL.md` and find appropriate Codex skills for this project.
+Read `/path/to/Find-Skills/.cursor/skills/find-skills/SKILL.md` and find relevant skills for this project.
 ```
 
-The agent should read:
+Gemini CLI:
 
 ```text
-SKILL.md
+Read `/path/to/Find-Skills/.gemini/skills/find-skills/SKILL.md` and find relevant skills for this project.
 ```
 
 ## Installed Files
@@ -108,22 +110,9 @@ Each host gets a self-contained skill:
 .gemini/skills/find-skills/SKILL.md
 ```
 
-Each skills folder also includes a README:
-
-```text
-.codex/skills/README.md
-.claude/skills/README.md
-.cursor/skills/README.md
-.gemini/skills/README.md
-```
-
 Each installed skill is self-contained. Installing only one host folder is enough.
 
-The root copy is also available at:
-
-```text
-SKILL.md
-```
+The installed `find-skills/SKILL.md` is the runtime entrypoint. It does not require the repository root `SKILL.md`, README files, or other host folders after installation.
 
 ## What The Agent Does
 
@@ -132,9 +121,11 @@ The agent should:
 1. Read `SKILL.md`.
 2. Understand the project or idea.
 3. Search available `SKILL.md` files.
-4. Rank candidates into `Precise`, `Balanced`, and `Recall`.
-5. Show only `Precise` recommendations in chat unless the user asks for more.
-6. Mention broader candidates when useful.
+4. Infer whether missing context would change the recommendation.
+5. Ask up to 3 clarification questions only when needed.
+6. Rank candidates into `Precise`, `Balanced`, and `Recall`.
+7. Show only `Precise` recommendations in chat unless the user asks for more.
+8. Mention broader candidates when useful.
 
 ## Output Format
 
@@ -149,6 +140,16 @@ Broader candidates:
 - Balanced: <short list or count>
 - Recall: <short list or count>
 ```
+
+The agent also writes a local index under the current project root:
+
+```text
+.find-skills/<key>/index.md
+```
+
+`<key>` is a short lowercase slug for the user's search, such as `web-game`, `crm`, or `agent-eval`.
+
+The index should include ranked candidates with bucket, score, reason, source path, and install notes.
 
 ## Example Domains
 
@@ -188,20 +189,12 @@ skill-creator
 skill-installer
 ```
 
-## Optional Reports
+## Search Index
 
-If the agent writes files, use key-based folders:
+Use key-based folders under the current project root:
 
 ```text
-.find-skills/<key>/reports/precise.md
-.find-skills/<key>/reports/balanced.md
-.find-skills/<key>/reports/recall.md
+.find-skills/<key>/index.md
 ```
 
 `.find-skills/` is disposable. It can be deleted and recreated.
-
-## No Runtime Required
-
-This repository is Markdown-only. There is no required Python, Node, or shell runtime.
-
-The expected behavior is for the agent to read `SKILL.md` and perform discovery directly from skill metadata.
