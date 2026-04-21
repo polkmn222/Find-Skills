@@ -27,9 +27,35 @@ Do not ask the user to run Python or terminal commands. Inspect files directly.
 <project-root>/.gemini/skills/**/SKILL.md
 ```
 
-4. Match against `name`, `description`, `When to Use`, and headings.
-5. Group candidates as `Precise`, `Balanced`, and `Recall`.
-6. Show `Precise` in the chat. Mention that broader candidates can be reviewed if useful.
+4. Match against `name`, `description`, `When to Use`, headings, and routing tables.
+5. Identify candidate clusters before ranking.
+6. Run the Clarification Gate below.
+7. If enough information is available, group candidates as `Precise`, `Balanced`, and `Recall`.
+8. Show `Precise` in the chat. Mention that broader candidates can be reviewed if useful.
+
+## Clarification Gate
+
+Before recommending skills, decide whether the request has enough information to make precise recommendations.
+
+Do not use a fixed question list. Instead, infer the most important missing dimensions from:
+
+- the user's request
+- project files, if available
+- candidate skill metadata: `name`, `description`, `When to Use`, headings, and routing tables
+
+Ask clarification questions only when the answers would change which skills are recommended.
+
+Look for routing signals such as:
+
+- platform, runtime, or integration target choices
+- language, framework, or toolchain choices
+- implementation vs design vs testing vs deployment needs
+- scope or maturity level
+- domain, subdomain, modality, or data/source choices
+
+If one missing answer could move a skill between `Precise` and `Balanced`, ask up to 3 concise clarification questions and do not recommend skills yet.
+
+If the user asks for quick recommendations, says assumptions are fine, or the likely route is obvious from context, proceed with explicit assumptions.
 
 ## Output
 
