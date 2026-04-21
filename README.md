@@ -114,6 +114,36 @@ Each installed skill is self-contained. Installing only one host folder is enoug
 
 The installed `find-skills/SKILL.md` is the runtime entrypoint. It does not require the repository root `SKILL.md`, README files, or other host folders after installation.
 
+## Maintainer Checks
+
+Run all lightweight checks before committing:
+
+```bash
+./scripts/check-all.sh
+```
+
+This runs the host-copy sync check and the structured scoring-case guardrail check.
+
+## Maintaining Host Copies
+
+The host-specific `SKILL.md` files should stay aligned except for host names, workflow headings, and install/search paths. Use the Codex copy as the comparison baseline when editing shared content:
+
+```text
+.codex/skills/find-skills/SKILL.md
+```
+
+Safe update flow:
+
+1. Edit the shared content in all host-specific `SKILL.md` files.
+2. Keep only the host-specific labels and paths different.
+3. Run the drift check:
+
+```bash
+./scripts/check-skill-sync.sh
+```
+
+The check normalizes expected host differences and fails when any shared content drifts. It has no external dependencies beyond standard shell tools, so it can also be used as a lightweight CI check.
+
 ## What The Agent Does
 
 The agent should:
@@ -123,23 +153,64 @@ The agent should:
 3. Search available `SKILL.md` files.
 4. Infer whether missing context would change the recommendation.
 5. Ask up to 3 clarification questions only when needed.
-6. Rank candidates into `Precise`, `Balanced`, and `Recall`.
+6. Score candidates and bucket them into `Precise`, `Balanced`, `Recall`, or `Exclude`.
 7. Show only `Precise` recommendations in chat unless the user asks for more.
 8. Mention broader candidates when useful.
 
-## Output Format
+## Scoring Model
+
+Candidate scoring is rubric-first. The installed `SKILL.md` files define a base score from `0-100` using task match, routing fit, actionability, specificity, and confidence. Optional external signals can adjust that score, but the total external adjustment is bounded to `-15..15`.
+
+External signals may include prior successful use, project-local stack evidence, user or repo preferences, recent usage patterns, skill freshness, retrieval scores, and optional SNS/community evidence. Community signals are conservative by design: they can support candidate expansion, trend detection, practical usage evidence, confidence adjustment, and freshness checks, but they cannot override repository metadata, hard constraints, or the base rubric.
+
+Bucket assignment is not score-only. `Precise` requires a strong final score, base score at least `70`, direct task support, no hard conflict, immediate actionability, and explicit metadata evidence. Hard conflicts always force `Exclude`.
+
+Human-readable and machine-readable scoring cases are in:
 
 ```text
-Precise recommendations
-
-1. <skill-name>
-   Why: <short reason>
-   Path: <local path if available>
-
-Broader candidates:
-- Balanced: <short list or count>
-- Recall: <short list or count>
+examples/scoring-cases.md
+examples/scoring-cases.yaml
 ```
+
+Validate the structured cases with:
+
+```bash
+./scripts/check-scoring-cases.py
+```
+
+## Output Format
+
+Scores are request-relative fit scores, not general skill quality scores. Normal user-facing output should stay concise, with detailed scoring breakdowns reserved for audit/debug or when requested.
+
+```text
+Precise
+
+1. <skill-name> - <final_score> final / <base_score> base
+   Reason: <one-line request-relative fit reason>
+   Evidence: <name, description, When to Use, routing table, or project-context evidence>
+   External: <external_adjustment, only if nonzero>
+
+Balanced
+
+1. <skill-name> - <final_score> final / <base_score> base
+   Reason: <one-line reason>
+   Evidence: <metadata or project-context evidence>
+   Why not precise: <missing detail, adjacent scope, weaker actionability, or lower evidence>
+
+Recall
+
+1. <skill-name> - <final_score> final / <base_score> base
+   Reason: <fallback, exploration, or follow-up value>
+   Evidence: <metadata or project-context evidence>
+   Caveat: <why it is broad or conditional>
+
+Excluded
+
+1. <skill-name> - Excluded
+   Reason: <hard conflict, contradicted constraint, or out-of-scope explanation>
+```
+
+If there are no `Precise` matches, say so and show the best `Balanced` or `Recall` candidates. If the request is ambiguous, state the missing detail that would improve routing. Excluded candidates should only be shown when they explain an important conflict.
 
 The agent also writes a local index under the current project root:
 

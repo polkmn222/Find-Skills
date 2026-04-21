@@ -1,0 +1,155 @@
+version: 1
+description: Machine-readable companion to examples/scoring-cases.md for the find-skills scoring rubric.
+cases:
+  - id: external_strong_candidate_boosted
+    user_request: Find skills for a React accessibility audit.
+    candidate_skill: accessibility-compliance-accessibility-audit
+    base_score:
+      task_match: 34
+      routing_fit: 23
+      actionability: 19
+      specificity: 9
+      confidence: 9
+    external_adjustment: 7
+    final_score: 100
+    expected_bucket: Precise
+    hard_conflict: false
+    constraint_status: satisfied
+    expected_reason: Direct accessibility audit support, explicit metadata evidence, actionable immediately, and bounded external signals only reinforce a strong rubric score.
+
+  - id: external_weak_match_not_promoted
+    user_request: Find skills for a PostHog product analytics event plan.
+    candidate_skill: ai-product
+    base_score:
+      task_match: 18
+      routing_fit: 14
+      actionability: 12
+      specificity: 4
+      confidence: 7
+    external_adjustment: 13
+    final_score: 68
+    expected_bucket: Recall
+    expected_bucket_not: Precise
+    hard_conflict: false
+    constraint_status: missing_detail
+    expected_reason: External data helps discovery, but base score is below 70 and the skill is generic compared with analytics-specific siblings.
+
+  - id: external_hard_conflict_overrides_signal
+    user_request: Find Python backend deployment skills. Do not recommend frontend-only skills.
+    candidate_skill: angular
+    base_score:
+      task_match: 10
+      routing_fit: 0
+      actionability: 5
+      specificity: 5
+      confidence: 8
+    external_adjustment: 15
+    final_score: 43
+    expected_bucket: Exclude
+    hard_conflict: true
+    constraint_status: contradicted
+    community_signals_summary: Positive community adjustment is present, but the explicit frontend-only conflict controls the outcome.
+    expected_reason: The user explicitly excluded frontend-only routes, so the hard conflict forces exclusion despite positive external signals.
+
+  - id: sibling_specific_skill_precise
+    user_request: Find skills for implementing Algolia search in React.
+    candidate_skill: algolia-search
+    base_score:
+      task_match: 35
+      routing_fit: 24
+      actionability: 19
+      specificity: 10
+      confidence: 9
+    external_adjustment: 2
+    final_score: 99
+    expected_bucket: Precise
+    hard_conflict: false
+    constraint_status: satisfied
+    expected_reason: Named platform match, specific implementation support, and explicit metadata evidence.
+
+  - id: sibling_generic_skill_demoted
+    user_request: Find skills for implementing Algolia search in React.
+    candidate_skill: ai-engineer
+    base_score:
+      task_match: 19
+      routing_fit: 12
+      actionability: 12
+      specificity: 3
+      confidence: 7
+    external_adjustment: 6
+    final_score: 59
+    expected_bucket: Recall
+    expected_bucket_not: Precise
+    hard_conflict: false
+    constraint_status: satisfied
+    expected_reason: Broad engineering relevance, but a more specific sibling directly covers Algolia search.
+
+  - id: community_boosts_strong_candidate
+    user_request: Find skills for evaluating AI agents.
+    candidate_skill: agent-evaluation
+    base_score:
+      task_match: 34
+      routing_fit: 23
+      actionability: 18
+      specificity: 9
+      confidence: 9
+    external_adjustment: 6
+    final_score: 99
+    expected_bucket: Precise
+    hard_conflict: false
+    constraint_status: satisfied
+    community_signals_summary: Strong relevant mentions with practical examples from github_issue and blog sources reinforce an already strong match.
+    expected_reason: Community evidence reinforces an already strong metadata-backed match.
+
+  - id: community_weak_match_not_promoted
+    user_request: Find skills for Stripe billing integration.
+    candidate_skill: analytics-product
+    base_score:
+      task_match: 14
+      routing_fit: 8
+      actionability: 8
+      specificity: 3
+      confidence: 6
+    external_adjustment: 5
+    final_score: 44
+    expected_bucket: Exclude
+    expected_bucket_not: Precise
+    hard_conflict: false
+    constraint_status: out_of_scope
+    community_signals_summary: Community mentions exist, but relevance and metadata support are too weak for promotion.
+    expected_reason: Mentions do not overcome weak task match or missing repository metadata support.
+
+  - id: community_noisy_promotional_penalized
+    user_request: Find skills for Kubernetes compliance hardening.
+    candidate_skill: aegisops-ai
+    base_score:
+      task_match: 28
+      routing_fit: 21
+      actionability: 16
+      specificity: 8
+      confidence: 8
+    external_adjustment: -4
+    final_score: 77
+    expected_bucket: Balanced
+    hard_conflict: false
+    constraint_status: missing_detail
+    community_signals_summary: High mention count is offset by low credibility, few practical examples, and high noise penalty from reddit and x sources.
+    expected_reason: The base match is useful, but noisy promotional mentions reduce confidence and leave one missing detail.
+
+  - id: community_trending_unsupported_candidate_to_validate
+    user_request: Find skills for a new community-hyped vector database integration.
+    candidate_skill: community-vector-db-x
+    base_score:
+      task_match: 20
+      routing_fit: 12
+      actionability: 7
+      specificity: 5
+      confidence: 2
+    external_adjustment: 8
+    final_score: 54
+    expected_bucket: Recall
+    expected_bucket_not: Precise
+    hard_conflict: false
+    constraint_status: missing_detail
+    community_signals_summary: Trending github_discussion, hackernews, and blog evidence suggests a candidate to validate, but repository metadata is weak or absent.
+    expected_reason: Community trend suggests a candidate to validate, but repository metadata is weak or absent, so it cannot be Precise.
