@@ -27,6 +27,8 @@ normalize() {
     -e 's/Use this Claude Code skill/Use this <HOST> skill/g' \
     -e 's/Use this Cursor skill/Use this <HOST> skill/g' \
     -e 's/Use this Gemini CLI skill/Use this <HOST> skill/g' \
+    -e 's/relevant Codex skills/relevant project skills/g' \
+    -e 's/use Codex skills/use project skills/g' \
     -e 's/## Codex Workflow/## <HOST> Workflow/g' \
     -e 's/## Claude Code Workflow/## <HOST> Workflow/g' \
     -e 's/## Cursor Workflow/## <HOST> Workflow/g' \
@@ -37,6 +39,10 @@ normalize() {
     -e 's#\.claude/skills/find-skills#.<HOST_DIR>/skills/find-skills#g' \
     -e 's#\.cursor/skills/find-skills#.<HOST_DIR>/skills/find-skills#g' \
     -e 's#\.gemini/skills/find-skills#.<HOST_DIR>/skills/find-skills#g' \
+    -e 's#\.codex/skills/#.<HOST_DIR>/skills/#g' \
+    -e 's#\.claude/skills/#.<HOST_DIR>/skills/#g' \
+    -e 's#\.cursor/skills/#.<HOST_DIR>/skills/#g' \
+    -e 's#\.gemini/skills/#.<HOST_DIR>/skills/#g' \
     -e 's#~/\.codex/skills#~/.<HOST_DIR>/skills#g' \
     -e 's#~/\.claude/skills#~/.<HOST_DIR>/skills#g' \
     -e 's#~/\.cursor/skills#~/.<HOST_DIR>/skills#g' \
