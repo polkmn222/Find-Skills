@@ -1,6 +1,6 @@
 # Find Skills Checklist
 
-This document defines the checklist standard used by `find-skills2` before searching for relevant Codex skills. The checklist is mandatory and user-first: receive, read, or confirm the request-specific checklist before searching skill metadata.
+This document defines the checklist standard used by `find-skills` before searching for relevant Codex skills. The checklist is mandatory and user-first: receive, read, or confirm the request-specific checklist before searching skill metadata.
 
 Keep this source document in English. Request-specific checklist files written under `docs/checklist-###.md` may use the user's language.
 
@@ -42,7 +42,7 @@ Rules:
 - Create `docs/` if it does not exist.
 - Never overwrite an existing checklist.
 - Preserve legacy `docs/checklist.md` if present and continue with numbered files.
-- Do not write request checklists inside the installed `.codex/skills/find-skills2` folder unless that folder is the project root.
+- Do not write request checklists inside the installed `.codex/skills/find-skills` folder unless that folder is the project root.
 - If filesystem writes are unavailable, show the same checklist in chat and state that it could not be written.
 
 ## Answer Format
@@ -205,4 +205,3 @@ A completed checklist should make these easy to answer:
 - Where will the index be written?
 - Is the recommendation intended for production or another maturity target?
 - Are project-local skill installation and implementation gates relevant?
-

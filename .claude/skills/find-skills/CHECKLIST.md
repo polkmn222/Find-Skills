@@ -1,6 +1,6 @@
 # Find Skills Checklist
 
-This document defines the checklist standard used by `find-skills` before searching for relevant project skills. The checklist is mandatory and user-first: receive, read, or confirm the request-specific checklist before searching skill metadata.
+This document defines the checklist standard used by `find-skills` before searching for relevant Codex skills. The checklist is mandatory and user-first: receive, read, or confirm the request-specific checklist before searching skill metadata.
 
 Keep this source document in English. Request-specific checklist files written under `docs/checklist-###.md` may use the user's language.
 
@@ -42,7 +42,7 @@ Rules:
 - Create `docs/` if it does not exist.
 - Never overwrite an existing checklist.
 - Preserve legacy `docs/checklist.md` if present and continue with numbered files.
-- Do not write request checklists inside the installed `.claude/skills/find-skills` folder unless that folder is the project root.
+- Do not write request checklists inside the installed `.codex/skills/find-skills` folder unless that folder is the project root.
 - If filesystem writes are unavailable, show the same checklist in chat and state that it could not be written.
 
 ## Answer Format
@@ -89,7 +89,7 @@ Capture the dimensions that matter for the request:
 
 Every checklist must ask whether project folder/workspace setup should be included when the request may lead to implementation, scaffolding, installation, or a runnable project.
 
-When relevant, ask whether the user wants a Claude Code-friendly folder and instruction layout. Mention setup/support skills only when useful, such as:
+When relevant, ask whether the user wants a Codex-friendly folder and instruction layout. Mention setup/support skills only when useful, such as:
 
 - `skill-installer`
 - `skill-creator`
@@ -106,10 +106,10 @@ When the request may lead to skill installation, project setup, implementation, 
 The normal answer should state that project-specific skills must be installed or copied into:
 
 ```text
-.claude/skills/<skill-name>/SKILL.md
+.codex/skills/<skill-name>/SKILL.md
 ```
 
-Home-level or global locations such as `~/.claude/skills`, `~/.agents/skills`, or tool-managed global stores do not count as installed for the current project. They may be recorded only as source locations, caches, or temporary installation locations.
+Home-level or global locations such as `~/.codex/skills`, `~/.agents/skills`, or tool-managed global stores do not count as installed for the current project. They may be recorded only as source locations, caches, or temporary installation locations.
 
 ## Search Scope
 
@@ -205,4 +205,3 @@ A completed checklist should make these easy to answer:
 - Where will the index be written?
 - Is the recommendation intended for production or another maturity target?
 - Are project-local skill installation and implementation gates relevant?
-

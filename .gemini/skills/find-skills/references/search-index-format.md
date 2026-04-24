@@ -25,7 +25,7 @@ Include:
   - candidates found
   - candidates rejected
   - explicit reason external discovery was skipped or limited, if applicable
-- bootstrap skill availability in current project's `.gemini/skills/`
+- bootstrap skill availability in current project's `.codex/skills/`
 - ranked candidates with:
   - index number
   - final score
@@ -74,7 +74,7 @@ Use:
 - `installation failed`
 - `not installed`
 
-Global/home-level installs do not count as `present` unless copied or synced into the current project's `.gemini/skills/`.
+Global/home-level installs do not count as `present` unless copied or synced into the current project's `.codex/skills/`.
 
 ## Filesystem Fallback
 

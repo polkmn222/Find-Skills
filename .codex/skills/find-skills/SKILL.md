@@ -82,6 +82,10 @@ For project-specific work, a skill counts as installed only when this file exist
 .codex/skills/<skill-name>/SKILL.md
 ```
 
+The canonical installed location for this skill is `.codex/skills/find-skills/SKILL.md`.
+If a matching development or source copy exists outside `.codex/skills/` such as `.codex/find-skills/`,
+do not treat that copy as the installed project-local skill path.
+
 Global or home-level installs such as `~/.codex/skills` or `~/.agents/skills` do not satisfy project-local installation. Use them only as sources, caches, or temporary installs. See `references/project-local-installation.md`.
 
 ## Search Index
@@ -100,4 +104,3 @@ The index must cite the checklist path and rank candidates from checklist conten
 - If external discovery is unavailable due to network, tooling, permission, or time constraints, record the limitation in both checklist-derived search scope and the index.
 - If no usable `SKILL.md` files are found, report the paths checked and why recommendations are limited.
 - If install verification fails, do not mark the skill as installed.
-

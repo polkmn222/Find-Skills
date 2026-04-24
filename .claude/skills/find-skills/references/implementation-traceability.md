@@ -21,7 +21,7 @@ Before implementation begins:
 
 1. Confirm the completed checklist.
 2. Confirm the generated search index.
-3. Verify selected or required skills under `.claude/skills/<skill-name>/SKILL.md`.
+3. Verify selected or required skills under `.codex/skills/<skill-name>/SKILL.md`.
 4. Confirm any assumptions that affect files, dependencies, cost, data access, or irreversible actions.
 
 ## Install-Only Requests
@@ -29,7 +29,7 @@ Before implementation begins:
 If the user asks only to install skills:
 
 - install/copy only the requested or indexed skills
-- use project-local `.claude/skills/`
+- use project-local `.codex/skills/`
 - verify each `SKILL.md`
 - update index installation status when an index exists
 - do not implement, scaffold, refactor, or create unrelated artifacts

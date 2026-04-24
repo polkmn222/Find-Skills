@@ -6,6 +6,9 @@ For project-specific work, a skill counts as installed only when it exists under
 .codex/skills/<skill-name>/SKILL.md
 ```
 
+For this repository's `find-skills` skill, the canonical installed file is `.codex/skills/find-skills/SKILL.md`.
+Copies outside `.codex/skills/`, including `.codex/find-skills/`, are source or development copies unless explicitly synced.
+
 Home-level or global locations do not count as installed for the current project:
 
 - `~/.codex/skills`
@@ -42,4 +45,3 @@ When one external package installs multiple concrete skills, record:
 - source URL
 - actual project-local skill names installed
 - verification evidence for each installed `SKILL.md`
-
